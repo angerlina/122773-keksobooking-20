@@ -1,7 +1,7 @@
-# Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
+﻿# Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Ангелина Ратновская](https://up.htmlacademy.ru/javascript/20/user/122773).
-* Наставник: `Неизвестно`.
+* Наставник: Святослав Родионов
 
 ---
 
