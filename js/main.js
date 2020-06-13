@@ -25,7 +25,7 @@ var temporaryPin = pinTemplate.cloneNode(true);
 temporaryPin.style.display = 'none';
 temporaryPin = pinsRoot.appendChild(temporaryPin);
 var pinHeight = formatPixelValueToInt(getComputedStyle(temporaryPin, ':after').height);
-var pinWidth = formatPixelValueToInt(getComputedStyle(temporaryPin).width);
+var pinWidth = formatPixelValueToInt(getComputedStyle(temporaryPin, ':after').width);
 temporaryPin.remove();
 
 
