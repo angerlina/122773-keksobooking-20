@@ -3,13 +3,13 @@
 var TITLES = ['Сдам квартиру срочно', 'Сдам квартиру для туристов', 'Сдам квартиру посуточно'];
 var TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var TIMES = ['12:00', '13:00', '14:00'];
-var DESCRIPTION = ['В шаговой доступности от метро и прочего транспорта', 'Рядом много продуктовых магазинов и ресторанов'];
+var DESCRIPTIONS = ['В шаговой доступности от метро и прочего транспорта', 'Рядом много продуктовых магазинов и ресторанов'];
 var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 var OFFERS_AMOUNT = 8;
 
-document.querySelector('.map--faded').classList.remove('map--faded');
-var pinsRoot = document.querySelector('.map__pins');
+document.querySelector('.map').classList.remove('map--faded');
+var pinsContainer = document.querySelector('.map__pins');
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 pinTemplate.querySelector('img');
 var mapElement = document.querySelector('.map');
@@ -23,10 +23,11 @@ var formatPixelValueToInt = function (pixels) {
 
 var temporaryPin = pinTemplate.cloneNode(true);
 temporaryPin.style.display = 'none';
-temporaryPin = pinsRoot.appendChild(temporaryPin);
+temporaryPin = pinsContainer.appendChild(temporaryPin);
 var pinHeight = formatPixelValueToInt(getComputedStyle(temporaryPin, ':after').height);
 var pinWidth = formatPixelValueToInt(getComputedStyle(temporaryPin, ':after').width);
-temporaryPin.remove();
+var halfOfPinWidth = pinWidth / 2;
+pinsContainer.removeChild(temporaryPin);
 
 
 var getRandomInt = function (min, max) {
@@ -59,20 +60,9 @@ var formatUserNumber = function (number) {
   return formattedNumber;
 };
 
-var generateOffer = function () {
-  var offer = {
-    title: '',
-    address: '',
-    price: '',
-    type: '',
-    rooms: '',
-    guests: '',
-    checkin: '',
-    checkout: '',
-    features: [],
-    description: '',
-    photos: []
-  };
+var generateOffer = function (userNumber) {
+  var mapWidth = mapElement.clientWidth;
+  var offer = {location: {}, author: {}};
   offer.title = getRandomItemFromArray(TITLES);
   offer.price = getRandomInt(10000, 100000);
   offer.type = getRandomItemFromArray(TYPES);
@@ -81,43 +71,30 @@ var generateOffer = function () {
   offer.checkin = getRandomItemFromArray(TIMES);
   offer.checkout = getRandomItemFromArray(TIMES);
   offer.features = getRandomItemsFromArray(FEATURES);
-  offer.description = getRandomItemFromArray(DESCRIPTION);
+  offer.description = getRandomItemFromArray(DESCRIPTIONS);
   offer.photos = getRandomItemsFromArray(PHOTOS);
+  offer.location.x = getRandomInt(halfOfPinWidth, mapWidth);
+  offer.location.y = getRandomInt(130 + pinHeight, 630);
+  offer.author.avatar = 'img/avatars/user' + formatUserNumber(userNumber) + '.png';
+  offer.address = offer.location.x + ', ' + offer.location.y;
   return offer;
 };
 
 var generateOffers = function () {
   var offers = [];
   for (var i = 0; i < OFFERS_AMOUNT; i++) {
-    offers.push(generateOffer());
+    offers.push(generateOffer(i));
   }
   return offers;
-};
-
-var generatePin = function (userNumber, offer) {
-  var pin = {
-    author: {
-      avatar: ''
-    },
-    location: {
-      x: 0,
-      y: 0
-    }
-  };
-  var width = mapElement.clientWidth;
-  pin.location.x = getRandomInt(0, width);
-  pin.location.y = getRandomInt(130, 630);
-  pin.author.avatar = 'img/avatars/user' + formatUserNumber(userNumber);
-  pin.offer = offer;
-  pin.offer.address = pin.location.x + ', ' + pin.location.y;
-  return pin;
 };
 
 
 var generatePins = function (array) {
   var pins = [];
   for (var i = 0; i < array.length; i++) {
-    pins.push(generatePin(i, array[i]));
+    var pin = {};
+    pin.offer = array[i];
+    pins.push(pin);
   }
   return pins;
 };
@@ -125,16 +102,14 @@ var generatePins = function (array) {
 
 var createPinElement = function (pin) {
   var pinElement = pinTemplate.cloneNode(true);
-  var pinX = pin.location.x;
-  var halfOfWidth = pinWidth / 2;
-  var pinY = pin.location.y;
-  var height = pinHeight;
-  pinElement.style.left = (pinX - halfOfWidth) + 'px';
-  pinElement.style.top = (pinY - height) + 'px';
+  var pinX = pin.offer.location.x;
+  var pinY = pin.offer.location.y;
+  pinElement.style.left = (pinX - halfOfPinWidth) + 'px';
+  pinElement.style.top = (pinY - pinHeight) + 'px';
 
   var imageElement = pinElement.querySelector('img');
   imageElement.alt = pin.offer.title;
-  imageElement.src = pin.author.avatar;
+  imageElement.src = pin.offer.author.avatar;
 
   return pinElement;
 };
@@ -152,6 +127,6 @@ var offers = generateOffers();
 var pins = generatePins(offers);
 var documentFragment = createPinElements(pins);
 
-pinsRoot.appendChild(documentFragment);
+pinsContainer.appendChild(documentFragment);
 
 
