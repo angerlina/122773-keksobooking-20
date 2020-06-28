@@ -605,6 +605,11 @@ fieldset {
   -webkit-box-shadow: 0 0 2px 2px #ff6547;
           box-shadow: 0 0 2px 2px #ff6547;
 }
+.ad-form select:invalid {
+  border-color: red;
+  border-width: medium;
+
+}
 
 .ad-form__element--time {
   -ms-flex-preferred-size: 50%;
