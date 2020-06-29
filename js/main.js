@@ -98,19 +98,7 @@ var generateOffers = function (quantity) {
   return offers;
 };
 
-
 var createPinElement = function (offer) {
-var generatePins = function (array) {
-  var pins = [];
-  for (var i = 0; i < array.length; i++) {
-    var pin = {};
-    pin.offer = array[i];
-    pins.push(pin);
-  }
-  return pins;
-};
-
-var createPinElement = function (pin) {
   var pinElement = pinTemplate.cloneNode(true);
   var pinX = offer.location.x;
   var pinY = offer.location.y;
@@ -173,10 +161,8 @@ var fillAddressInput = function (locationX, locationY) {
 
 var activatePage = function () {
   togglePageActivity(true);
-  var offers = generateOffers();
-  var pins = generatePins(offers);
-  var documentFragment = createPinElements(pins);
-  pinsContainer.appendChild(documentFragment);
+  var offers = generateOffers(OFFERS_AMOUNT);
+  renderPins(offers);
   calculateAndFillAddress();
 };
 
@@ -230,7 +216,7 @@ var setCustomValidityForGuestsAndRooms = function (inputElement) {
   } else {
     inputElement.setCustomValidity('');
   }
-};
 
+};
 
 fillAddressAfterPageRendering();
