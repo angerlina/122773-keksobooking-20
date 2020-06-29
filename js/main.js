@@ -67,7 +67,15 @@ var formatUserNumber = function (number) {
 
 var generateOffer = function (userNumber) {
   var mapWidth = mapElement.clientWidth;
-  var offer = {location: {}, author: {}};
+  var offer = {
+    location: {
+      x: getRandomInt(halfOfPinWidth, mapWidth),
+      y: getRandomInt(130 + pinHeight, 630)},
+    author: {
+      avatar: 'img/avatars/user' + formatUserNumber(userNumber) + '.png'
+    }
+  };
+
   offer.title = getRandomItemFromArray(TITLES);
   offer.price = getRandomInt(10000, 100000);
   offer.type = getRandomItemFromArray(TYPES);
@@ -78,22 +86,20 @@ var generateOffer = function (userNumber) {
   offer.features = getRandomItemsFromArray(FEATURES);
   offer.description = getRandomItemFromArray(DESCRIPTIONS);
   offer.photos = getRandomItemsFromArray(PHOTOS);
-  offer.location.x = getRandomInt(halfOfPinWidth, mapWidth);
-  offer.location.y = getRandomInt(130 + pinHeight, 630);
-  offer.author.avatar = 'img/avatars/user' + formatUserNumber(userNumber) + '.png';
   offer.address = offer.location.x + ', ' + offer.location.y;
   return offer;
 };
 
-var generateOffers = function () {
+var generateOffers = function (quantity) {
   var offers = [];
-  for (var i = 0; i < OFFERS_AMOUNT; i++) {
+  for (var i = 0; i < quantity; i++) {
     offers.push(generateOffer(i));
   }
   return offers;
 };
 
 
+var createPinElement = function (offer) {
 var generatePins = function (array) {
   var pins = [];
   for (var i = 0; i < array.length; i++) {
@@ -106,25 +112,25 @@ var generatePins = function (array) {
 
 var createPinElement = function (pin) {
   var pinElement = pinTemplate.cloneNode(true);
-  var pinX = pin.offer.location.x;
-  var pinY = pin.offer.location.y;
+  var pinX = offer.location.x;
+  var pinY = offer.location.y;
   pinElement.style.left = (pinX - halfOfPinWidth) + 'px';
   pinElement.style.top = (pinY - pinHeight) + 'px';
 
   var imageElement = pinElement.querySelector('img');
-  imageElement.alt = pin.offer.title;
-  imageElement.src = pin.offer.author.avatar;
+  imageElement.alt = offer.title;
+  imageElement.src = offer.author.avatar;
 
   return pinElement;
 };
 
-var createPinElements = function (pins) {
+var renderPins = function (offers) {
   var documentFragment = document.createDocumentFragment();
-  for (var i = 0; i < pins.length; i++) {
-    var pinElement = createPinElement(pins[i]);
+  for (var i = 0; i < offers.length; i++) {
+    var pinElement = createPinElement(offers[i]);
     documentFragment.appendChild(pinElement);
   }
-  return documentFragment;
+  pinsContainer.appendChild(documentFragment);
 };
 
 var toggleDisableForElementsList = function (selector, isDisabled) {
