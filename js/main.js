@@ -1,6 +1,5 @@
 'use strict';
 
-var MAIN_PIN_SELECTOR = '.map__pin--main';
 var TITLES = ['Сдам квартиру срочно', 'Сдам квартиру для туристов', 'Сдам квартиру посуточно'];
 var TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var TIMES = ['12:00', '13:00', '14:00'];
@@ -14,10 +13,11 @@ var pinsContainer = document.querySelector('.map__pins');
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 pinTemplate.querySelector('img');
 var mapElement = document.querySelector('.map');
-var mainPin = document.querySelector(MAIN_PIN_SELECTOR);
-
-var roomsSelect = document.querySelector('#room_number');
-var guestsSelect = document.querySelector('#capacity');
+var mainPin = document.querySelector('.map__pin--main');
+var offerForm = document.querySelector('.ad-form');
+var roomsSelect = offerForm.querySelector('#room_number');
+var guestsSelect = offerForm.querySelector('#capacity');
+var filtersForm = document.querySelector('.map__filters');
 
 var formatPixelValueToInt = function (pixels) {
   if (pixels) {
@@ -121,29 +121,13 @@ var renderPins = function (offers) {
   pinsContainer.appendChild(documentFragment);
 };
 
-var toggleDisableForElementsList = function (selector, isDisabled) {
-  var elements = document.querySelectorAll(selector);
-  for (var i = 0; i < elements.length; i++) {
-    elements[i].disabled = isDisabled;
+var changeFormState = function (formElement, disabled) {
+  var elementsToDisable = formElement.querySelectorAll('input, select');
+  for (var i = 0; i < elementsToDisable.length; i++) {
+    elementsToDisable[i].disabled = disabled;
   }
 };
 
-var toggleClass = function (selector, hasToContainClass, className) {
-  var element = document.querySelector(selector);
-  var containsClass = element.classList.contains(className);
-  if (containsClass && !hasToContainClass) {
-    element.classList.remove(className);
-  } else if (!containsClass && hasToContainClass) {
-    element.classList.add(className);
-  }
-};
-
-var togglePageActivity = function (isActive) {
-  toggleDisableForElementsList('.ad-form > fieldset', !isActive);
-  toggleDisableForElementsList('.map__filters > *', !isActive);
-  toggleClass('.map', !isActive, 'map--faded');
-  toggleClass('.ad-form', !isActive, 'ad-form--disabled');
-};
 
 var calculateAndFillAddress = function () {
   mainPin = document.querySelector('.map__pin--main');
@@ -160,10 +144,20 @@ var fillAddressInput = function (locationX, locationY) {
 
 
 var activatePage = function () {
-  togglePageActivity(true);
+  document.querySelector('.map').classList.remove('map--faded');
+  document.querySelector('.ad-form').classList.remove('ad-form--disabled');
+  changeFormState(offerForm, false);
+  changeFormState(filtersForm, false);
   var offers = generateOffers(OFFERS_AMOUNT);
   renderPins(offers);
   calculateAndFillAddress();
+};
+
+var inactivatePage = function () {
+  document.querySelector('.map').classList.add('map--faded');
+  document.querySelector('.ad-form').classList.add('ad-form--disabled');
+  changeFormState(offerForm, true);
+  changeFormState(filtersForm, true);
 };
 
 mainPin.addEventListener('mousedown', function (evt) {
@@ -179,8 +173,7 @@ mainPin.addEventListener('keydown', function (evt) {
 });
 
 var fillAddressAfterPageRendering = function () {
-  togglePageActivity(false);
-  mainPin = document.querySelector(MAIN_PIN_SELECTOR);
+  inactivatePage();
   var mainPinDiameter = formatPixelValueToInt(getComputedStyle(mainPin, ':after').width);
   var offset = Math.floor(mainPinDiameter / 2);
   var mainPinX = formatPixelValueToInt(mainPin.style.left) + offset;
