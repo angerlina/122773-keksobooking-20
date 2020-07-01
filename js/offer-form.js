@@ -3,10 +3,17 @@
 window.offerForm = (function () {
   var mainPin = document.querySelector('.map__pin--main');
 
-  var changeFormState = function (formElement, disabled) {
+  var enableForm = function (formElement) {
     var elementsToDisable = formElement.querySelectorAll('input, select, textarea');
     for (var i = 0; i < elementsToDisable.length; i++) {
-      elementsToDisable[i].disabled = disabled;
+      elementsToDisable[i].disabled = false;
+    }
+  };
+
+  var disableForm = function (formElement) {
+    var elementsToDisable = formElement.querySelectorAll('input, select, textarea');
+    for (var i = 0; i < elementsToDisable.length; i++) {
+      elementsToDisable[i].disabled = true;
     }
   };
 
@@ -37,6 +44,7 @@ window.offerForm = (function () {
   return {
     fillAddressAfterPageRendering: fillAddressAfterPageRendering,
     calculateAndFillAddress: calculateAndFillAddress,
-    changeFormState: changeFormState,
+    enableForm: enableForm,
+    disableForm: disableForm,
   };
 })();

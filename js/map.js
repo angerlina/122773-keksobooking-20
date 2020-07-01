@@ -6,15 +6,15 @@ window.map = (function () {
 
   var mainPin = document.querySelector('.map__pin--main');
   var offerFormElement = document.querySelector('.ad-form');
-  var filtersForm = document.querySelector('.map__filters');
+  var filtersFormElement = document.querySelector('.map__filters');
 
 
   var activatePage = function () {
     document.querySelector('.map').classList.remove('map--faded');
     document.querySelector('.ad-form').classList.remove('ad-form--disabled');
-    window.offerForm.changeFormState(offerFormElement, false);
-    window.offerForm.changeFormState(filtersForm, false);
-    var offers = window.data.generateOffers(window.data.OFFERS_AMOUNT);
+    window.offerForm.enableForm(offerFormElement, false);
+    window.offerForm.enableForm(filtersFormElement, false);
+    var offers = window.data.generateOffers(8);
     window.pins.renderPins(offers);
     window.offerForm.calculateAndFillAddress();
   };
@@ -22,8 +22,8 @@ window.map = (function () {
   var inactivatePage = function () {
     document.querySelector('.map').classList.add('map--faded');
     document.querySelector('.ad-form').classList.add('ad-form--disabled');
-    window.offerForm.changeFormState(offerFormElement, true);
-    window.offerForm.changeFormState(filtersForm, true);
+    window.offerForm.disableForm(offerFormElement);
+    window.offerForm.disableForm(filtersFormElement);
   };
 
   mainPin.addEventListener('mousedown', function (evt) {

@@ -20,8 +20,8 @@
 
 
   var setCustomValidityForGuestsAndRooms = function (inputElement) {
-    var rooms = parseInt(roomsSelect.value, 10);
-    var guests = parseInt(guestsSelect.value, 10);
+    var rooms = +roomsSelect;
+    var guests = +guestsSelect;
     if (rooms === 1 && guests !== 1) {
       inputElement.setCustomValidity(' 1 комната может быть только для 1 гостя');
     } else if (rooms === 2 && (guests === 3 || guests === 0)) {

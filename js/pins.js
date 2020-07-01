@@ -8,13 +8,13 @@ window.pins = (function () {
     var pinElement = pinTemplate.cloneNode(true);
     var pinX = offer.location.x;
     var pinY = offer.location.y;
-    pinElement.style.left = (pinX - window.data.halfOfPinWidth) + 'px';
-    pinElement.style.top = (pinY - window.data.pinHeight) + 'px';
+    var pinSize = window.data.pinSize;
+    pinElement.style.left = (pinX - pinSize.width) + 'px';
+    pinElement.style.top = (pinY - pinSize.width) + 'px';
 
     var imageElement = pinElement.querySelector('img');
     imageElement.alt = offer.title;
     imageElement.src = offer.author.avatar;
-
     return pinElement;
   };
 
