@@ -9,25 +9,7 @@ window.data = (function () {
   var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
   var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 
-  var getPinSize = function () {
-    var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
-    pinTemplate.querySelector('img');
-    var pinsContainer = document.querySelector('.map__pins');
-    var temporaryPin = pinTemplate.cloneNode(false);
-    temporaryPin.style.visibily = 'hidden';
-    temporaryPin = pinsContainer.appendChild(temporaryPin);
-    var pinHeight = window.utils.formatPixelValueToInt(getComputedStyle(temporaryPin, ':after').height);
-    var pinWidth = window.utils.formatPixelValueToInt(getComputedStyle(temporaryPin, ':after').width);
-    pinsContainer.removeChild(temporaryPin);
-    return {
-      width: pinWidth,
-      height: pinHeight,
-    };
-  };
-
   var mapElement = document.querySelector('.map');
-
-  var pinSize = getPinSize();
 
   var formatUserNumber = function (number) {
     var formattedNumber = number + 1;
@@ -37,7 +19,6 @@ window.data = (function () {
     return formattedNumber;
   };
 
-
   var generateOffer = function (userNumber) {
     var getRandomItemFromArray = window.utils.getRandomItemFromArray;
     var getRandomItemsFromArray = window.utils.getRandomItemsFromArray;
@@ -45,8 +26,8 @@ window.data = (function () {
     var mapWidth = mapElement.clientWidth;
     var offer = {
       location: {
-        x: window.utils.getRandomInt(pinSize.width / 2, mapWidth),
-        y: window.utils.getRandomInt(130 + pinSize.height, 630)},
+        x: window.utils.getRandomInt(window.pins.pinSize.width / 2, mapWidth),
+        y: window.utils.getRandomInt(130 + window.pins.pinSize.height, 630)},
       author: {
         avatar: 'img/avatars/user' + formatUserNumber(userNumber) + '.png'
       },
@@ -74,7 +55,6 @@ window.data = (function () {
   };
 
   return {
-    pinSize: pinSize,
     generateOffers: generateOffers,
   };
 })();
