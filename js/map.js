@@ -9,12 +9,11 @@ window.map = (function () {
   var filtersFormElement = document.querySelector('.map__filters');
 
 
-  var activatePage = function () {
+  var activatePage = function (offers) {
     document.querySelector('.map').classList.remove('map--faded');
     document.querySelector('.ad-form').classList.remove('ad-form--disabled');
     window.offerForm.enableForm(offerFormElement, false);
     window.offerForm.enableForm(filtersFormElement, false);
-    var offers = window.data.generateOffers(8);
     window.pins.renderPins(offers);
     window.offerForm.calculateAndFillAddress();
   };
@@ -28,7 +27,7 @@ window.map = (function () {
 
   mainPin.addEventListener('mousedown', function (evt) {
     if (evt.button === 0) {
-      activatePage();
+      window.load.sendGetRequest(activatePage);
     }
   });
 
