@@ -1,6 +1,6 @@
 'use strict';
 
-window.load = (function () {
+window.loadOffers = (function () {
   var URL = 'https://javascript.pages.academy/keksobooking/data';
 
   var StatusCode = {
