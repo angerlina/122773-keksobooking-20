@@ -1,6 +1,6 @@
 'use strict';
 
-window.data = (function () {
+window.offersData = (function () {
 
   var TITLES = ['Сдам квартиру срочно', 'Сдам квартиру для туристов', 'Сдам квартиру посуточно'];
   var TYPES = ['palace', 'flat', 'house', 'bungalo'];

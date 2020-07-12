@@ -27,7 +27,7 @@ window.map = (function () {
 
   mainPin.addEventListener('mousedown', function (evt) {
     if (evt.button === 0) {
-      window.load.sendGetRequest(activatePage);
+      window.loadOffers.sendGetRequest(activatePage);
     }
   });
 
