@@ -3,7 +3,7 @@
 window.utils = (function () {
 
   var getRandomInt = function (min, max) {
-    return Math.round((max - min) * Math.random());
+    return min + Math.round((max - min) * Math.random());
   };
 
   var formatPixelValueToInt = function (pixels) {
