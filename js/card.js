@@ -1,6 +1,7 @@
 'use strict';
 
 window.card = (function () {
+  var typesToTypesLabel = {'flat': 'Квартира', 'bungalo': 'Бунгало', 'house': 'Дом', 'palace': 'Дворец'};
   var cardTemplate = document.querySelector('#card').content.querySelector('article');
   var card = cardTemplate.cloneNode(true);
 
@@ -49,7 +50,7 @@ window.card = (function () {
     setDataInCardBlock('.popup__title', offer.title);
     setDataInCardBlock('.popup__text--address', offer.address);
     setDataInCardBlock('.popup__text--price', offer.price + '₽/ночь');
-    setDataInCardBlock('.popup__type', offer.type);
+    setDataInCardBlock('.popup__type', typesToTypesLabel[offer.type]);
     setDataInCardBlock('.popup__text--capacity',
         offer.rooms + ' комнаты для ' + offer.guests + ' гостей');
     setDataInCardBlock('.popup__text--time',
