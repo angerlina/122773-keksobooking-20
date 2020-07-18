@@ -20,8 +20,12 @@ window.offerForm = (function () {
   var calculateAndFillAddress = function () {
     mainPin = document.querySelector('.map__pin--main');
     var formatPixelValueToInt = window.utils.formatPixelValueToInt;
-    var mainPinOffsetX = formatPixelValueToInt(getComputedStyle(mainPin, ':after').width) / 2;
-    var mainPinOffsetY = formatPixelValueToInt(getComputedStyle(mainPin, ':after').height);
+    var mainPinOffsetX = Math.floor(
+        formatPixelValueToInt(
+            getComputedStyle(mainPin).width) / 2
+    );
+    var mainPinOffsetY = formatPixelValueToInt(
+        getComputedStyle(mainPin).height);
     fillAddressInput(formatPixelValueToInt(mainPin.style.left) + mainPinOffsetX,
         formatPixelValueToInt(mainPin.style.top) + mainPinOffsetY);
   };

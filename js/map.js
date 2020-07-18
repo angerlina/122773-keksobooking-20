@@ -8,7 +8,6 @@ window.map = (function () {
   var offerFormElement = document.querySelector('.ad-form');
   var filtersFormElement = document.querySelector('.map__filters');
 
-
   var activatePage = function (offers) {
     document.querySelector('.map').classList.remove('map--faded');
     document.querySelector('.ad-form').classList.remove('ad-form--disabled');
@@ -25,18 +24,13 @@ window.map = (function () {
     window.offerForm.disableForm(filtersFormElement);
   };
 
-  mainPin.addEventListener('mousedown', function (evt) {
-    if (evt.button === 0) {
-      window.loadOffers.sendGetRequest(activatePage);
-    }
-  });
-
   mainPin.addEventListener('keydown', function (evt) {
     if (evt.code === 'Enter') {
-      activatePage();
+      window.loadOffers.sendGetRequest(activatePage);
     }
   });
   return {
     inactivatePage: inactivatePage,
+    activatePage: activatePage,
   };
 })();
