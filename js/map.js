@@ -16,9 +16,6 @@ window.map = (function () {
     window.offerForm.enableForm(filtersFormElement, false);
     window.pins.renderPins(offers);
     window.offerForm.calculateAndFillAddress();
-    if (offers[0]) {
-      window.card.renderCard(offers[0]);
-    }
   };
 
   var inactivatePage = function () {

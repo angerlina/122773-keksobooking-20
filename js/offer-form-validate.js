@@ -4,35 +4,69 @@
   var offerForm = document.querySelector('.ad-form');
   var roomsSelect = offerForm.querySelector('#room_number');
   var guestsSelect = offerForm.querySelector('#capacity');
+  var priceInput = offerForm.querySelector('#price');
+  var typeSelect = offerForm.querySelector('#type');
+  var checkoutSelect = offerForm.querySelector('#timeout');
+  var checkinSelect = offerForm.querySelector('#timein');
+
+  var typesToMinPrices = {'bungalo': 0, 'flat': 1000, 'house': 5000, 'palace': 10000};
+
+  var setCustomValidityForPrice = function () {
+    var price = priceInput.value;
+    var type = typeSelect.value;
+    if (price < typesToMinPrices[type]) {
+      priceInput.setCustomValidity('Цена для данного типа жилья может быть не меньше ' + typesToMinPrices[type] + '₽/ночь');
+    } else {
+      priceInput.setCustomValidity('');
+    }
+  };
+
+  var setCustomValidityForGuestsAndRooms = function () {
+    var rooms = +roomsSelect.value;
+    var guests = +guestsSelect.value;
+    if (rooms === 1 && guests !== 1) {
+      guestsSelect.setCustomValidity(' 1 комната может быть только для 1 гостя');
+    } else if (rooms === 2 && (guests === 3 || guests === 0)) {
+      guestsSelect.setCustomValidity('2 комнаты могут быть только для 1 или 2 гостей');
+    } else if (rooms === 3 && guests === 0) {
+      guestsSelect.setCustomValidity('3 комнаты могут быть только для 1, 2 или 3 гостей');
+    } else if (rooms === 100 && guests !== 0) {
+      guestsSelect.setCustomValidity('100 комнат могут быть только "не для гостей"');
+    } else {
+      guestsSelect.setCustomValidity('');
+    }
+  };
+
+  typeSelect.addEventListener('change', function (evt) {
+    priceInput.placeholder = typesToMinPrices[evt.target.value];
+  });
+
+  priceInput.addEventListener('invalid', function () {
+    setCustomValidityForPrice();
+  });
+
+  priceInput.addEventListener('change', function () {
+    setCustomValidityForPrice();
+  });
+
 
   guestsSelect.addEventListener('change', function () {
     setCustomValidityForGuestsAndRooms(guestsSelect);
   });
 
-  roomsSelect.addEventListener('change', function () {
-    setCustomValidityForGuestsAndRooms(roomsSelect);
-  });
-
-
   guestsSelect.addEventListener('invalid', function () {
     setCustomValidityForGuestsAndRooms(guestsSelect);
   });
 
+  roomsSelect.addEventListener('change', function (evt) {
+    guestsSelect.value = evt.target.value;
+  });
 
-  var setCustomValidityForGuestsAndRooms = function (inputElement) {
-    var rooms = +roomsSelect;
-    var guests = +guestsSelect;
-    if (rooms === 1 && guests !== 1) {
-      inputElement.setCustomValidity(' 1 комната может быть только для 1 гостя');
-    } else if (rooms === 2 && (guests === 3 || guests === 0)) {
-      inputElement.setCustomValidity('2 комнаты могут быть только для 1 или 2 гостей');
-    } else if (rooms === 3 && guests === 0) {
-      inputElement.setCustomValidity('3 комнаты могут быть только для 1, 2 или 3 гостей');
-    } else if (rooms === 100 && guests !== 0) {
-      inputElement.setCustomValidity('100 комнат могут быть только "не для гостей"');
-    } else {
-      inputElement.setCustomValidity('');
-    }
+  checkoutSelect.addEventListener('change', function (evt) {
+    checkinSelect.value = evt.target.value;
+  });
 
-  };
+  checkinSelect.addEventListener('change', function (evt) {
+    checkoutSelect.value = evt.target.value;
+  });
 })();

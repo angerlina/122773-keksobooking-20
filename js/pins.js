@@ -33,11 +33,23 @@ window.pins = (function () {
     return pinElement;
   };
 
+  var addEventListeners = function (pinElement, data) {
+    pinElement.addEventListener('click', function () {
+      window.card.renderCard(data);
+    });
+    pinElement.addEventListener('keydown', function (evt) {
+      if (evt.key === 'Enter') {
+        window.card.renderCard(data);
+      }
+    });
+  };
+
   var renderPins = function (array) {
     var documentFragment = document.createDocumentFragment();
     for (var i = 0; i < array.length; i++) {
       var pinElement = createPinElement(array[i]);
       documentFragment.appendChild(pinElement);
+      addEventListeners(pinElement, array[i]);
     }
     pinsContainer.appendChild(documentFragment);
   };
