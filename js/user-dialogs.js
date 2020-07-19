@@ -24,15 +24,15 @@ window.userDialogs = (function () {
     }
   };
 
-  main.addEventListener('click', removeSuccessMessageHandler);
-  main.addEventListener('keydown', function (evt) {
+  document.addEventListener('click', removeSuccessMessageHandler);
+  document.addEventListener('keydown', function (evt) {
     if (evt.code === 'Escape') {
       removeSuccessMessageHandler();
     }
   });
 
-  main.addEventListener('click', removeErrorMessageHandler);
-  main.addEventListener('keydown', function (evt) {
+  document.addEventListener('click', removeErrorMessageHandler);
+  document.addEventListener('keydown', function (evt) {
     if (evt.code === 'Escape') {
       removeErrorMessageHandler();
     }

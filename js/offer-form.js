@@ -3,6 +3,11 @@
 window.offerForm = (function () {
   var mainPin = document.querySelector('.map__pin--main');
   var offerForm = document.querySelector('.ad-form');
+  var clearButton = document.querySelector('.ad-form__reset');
+
+  clearButton.addEventListener('click', function () {
+    window.map.inactivatePage();
+  });
 
   var resetOffersForm = function () {
     offerForm.reset();
@@ -21,14 +26,14 @@ window.offerForm = (function () {
   offerForm.addEventListener('submit', submitHandler);
 
   var enableForm = function (formElement) {
-    var elementsToDisable = formElement.querySelectorAll('input, select, textarea');
+    var elementsToDisable = formElement.querySelectorAll('input, select, textarea, button');
     for (var i = 0; i < elementsToDisable.length; i++) {
       elementsToDisable[i].disabled = false;
     }
   };
 
   var disableForm = function (formElement) {
-    var elementsToDisable = formElement.querySelectorAll('input, select, textarea');
+    var elementsToDisable = formElement.querySelectorAll('input, select, textarea, button');
     for (var i = 0; i < elementsToDisable.length; i++) {
       elementsToDisable[i].disabled = true;
     }

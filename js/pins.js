@@ -27,17 +27,21 @@ window.pins = (function () {
 
   var pinSize = getPinSize();
 
-  var createPinElement = function (offer) {
-    var pinElement = pinTemplate.cloneNode(true);
-    var pinX = offer.location.x;
-    var pinY = offer.location.y;
-    pinElement.style.left = (pinX - pinSize.width / 2) + 'px';
-    pinElement.style.top = (pinY - pinSize.height) + 'px';
+  var createPinElement = function (object) {
+    if (object.offer) {
+      var pinElement = pinTemplate.cloneNode(true);
+      var pinX = object.location.x;
+      var pinY = object.location.y;
+      pinElement.style.left = (pinX - pinSize.width / 2) + 'px';
+      pinElement.style.top = (pinY - pinSize.height) + 'px';
 
-    var imageElement = pinElement.querySelector('img');
-    imageElement.alt = offer.title;
-    imageElement.src = offer.author.avatar;
-    return pinElement;
+      var imageElement = pinElement.querySelector('img');
+      imageElement.alt = object.title;
+      imageElement.src = object.author.avatar;
+      return pinElement;
+    } else {
+      return null;
+    }
   };
 
   var addEventListeners = function (pinElement, data) {
@@ -55,8 +59,10 @@ window.pins = (function () {
     var documentFragment = document.createDocumentFragment();
     for (var i = 0; i < array.length; i++) {
       var pinElement = createPinElement(array[i]);
-      documentFragment.appendChild(pinElement);
-      addEventListeners(pinElement, array[i]);
+      if (pinElement) {
+        documentFragment.appendChild(pinElement);
+        addEventListeners(pinElement, array[i]);
+      }
     }
     pinsContainer.appendChild(documentFragment);
   };
