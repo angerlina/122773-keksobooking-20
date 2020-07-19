@@ -14,7 +14,6 @@ window.map = (function () {
   };
 
   var activatePage = function (offers) {
-    debugger;
     document.querySelector('.map').classList.remove('map--faded');
     document.querySelector('.ad-form').classList.remove('ad-form--disabled');
     window.offerForm.enableForm(offerFormElement, false);

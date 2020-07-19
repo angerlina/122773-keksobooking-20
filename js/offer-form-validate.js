@@ -59,7 +59,11 @@
   });
 
   roomsSelect.addEventListener('change', function (evt) {
-    guestsSelect.value = evt.target.value;
+    if (evt.target.value === '100') {
+      guestsSelect.value = 0;
+    } else {
+      guestsSelect.value = evt.target.value;
+    }
   });
 
   checkoutSelect.addEventListener('change', function (evt) {
