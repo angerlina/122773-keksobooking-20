@@ -7,7 +7,7 @@
   var max = {x: mapElement.clientWidth, y: 630};
 
   var getPinsAndActivatePins = function () {
-    window.loadOffers.sendGetRequest(window.map.activatePage);
+    window.offersApi.sendGetRequest(window.map.activatePage);
   };
 
   mainPin.addEventListener('mousedown', function (evt) {

@@ -1,4 +1,4 @@
 'use strict';
 
 window.map.inactivatePage();
-window.offerForm.fillAddressAfterPageRendering();
+window.offerForm.calculateAndFillAddressForRoundPin();

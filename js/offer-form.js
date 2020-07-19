@@ -2,6 +2,23 @@
 
 window.offerForm = (function () {
   var mainPin = document.querySelector('.map__pin--main');
+  var offerForm = document.querySelector('.ad-form');
+
+  var resetOffersForm = function () {
+    offerForm.reset();
+  };
+
+  var submitHandler = function (evt) {
+    window.offersApi.sendPostRequest(new FormData(offerForm), function () {
+      window.map.inactivatePage();
+      window.userDialogs.showSuccessSubmitMessage();
+    }, function () {
+      window.userDialogs.showErrorMessage();
+    });
+    evt.preventDefault();
+  };
+
+  offerForm.addEventListener('submit', submitHandler);
 
   var enableForm = function (formElement) {
     var elementsToDisable = formElement.querySelectorAll('input, select, textarea');
@@ -36,7 +53,7 @@ window.offerForm = (function () {
   };
 
 
-  var fillAddressAfterPageRendering = function () {
+  var calculateAndFillAddressForRoundPin = function () {
     var formatPixelValueToInt = window.utils.formatPixelValueToInt;
     var mainPinDiameter = formatPixelValueToInt(getComputedStyle(mainPin, ':after').width);
     var offset = Math.floor(mainPinDiameter / 2);
@@ -46,9 +63,10 @@ window.offerForm = (function () {
   };
 
   return {
-    fillAddressAfterPageRendering: fillAddressAfterPageRendering,
+    calculateAndFillAddressForRoundPin: calculateAndFillAddressForRoundPin,
     calculateAndFillAddress: calculateAndFillAddress,
     enableForm: enableForm,
     disableForm: disableForm,
+    resetOffersForm: resetOffersForm,
   };
 })();

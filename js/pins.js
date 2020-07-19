@@ -4,6 +4,13 @@ window.pins = (function () {
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var pinsContainer = document.querySelector('.map__pins');
 
+  var removePins = function () {
+    var pins = pinsContainer.querySelectorAll(':not(.map__pin--main).map__pin ');
+    pins.forEach(function (pin) {
+      pin.remove();
+    });
+  };
+
   var getPinSize = function () {
     pinTemplate.querySelector('img');
     var temporaryPin = pinTemplate.cloneNode(false);
@@ -11,7 +18,7 @@ window.pins = (function () {
     temporaryPin = pinsContainer.appendChild(temporaryPin);
     var pinHeight = window.utils.formatPixelValueToInt(getComputedStyle(temporaryPin, ':after').height);
     var pinWidth = window.utils.formatPixelValueToInt(getComputedStyle(temporaryPin, ':after').width);
-    pinsContainer.removeChild(temporaryPin);
+    temporaryPin.remove();
     return {
       width: pinWidth,
       height: pinHeight,
@@ -57,5 +64,6 @@ window.pins = (function () {
   return {
     renderPins: renderPins,
     pinSize: pinSize,
+    removePins: removePins,
   };
 })();
