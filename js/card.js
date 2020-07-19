@@ -1,7 +1,7 @@
 'use strict';
 
 window.card = (function () {
-  var typesToLabels = {'flat': 'Квартира', 'bungalo': 'Бунгало', 'house': 'Дом', 'palace': 'Дворец'};
+  var TypesToLabels = {'flat': 'Квартира', 'bungalo': 'Бунгало', 'house': 'Дом', 'palace': 'Дворец'};
   var cardTemplate = document.querySelector('#card').content.querySelector('article');
 
   var createFeatures = function (features, card) {
@@ -50,7 +50,7 @@ window.card = (function () {
     setDataInCardBlock('.popup__title', offer.title, card);
     setDataInCardBlock('.popup__text--address', offer.address, card);
     setDataInCardBlock('.popup__text--price', offer.price + '₽/ночь', card);
-    setDataInCardBlock('.popup__type', typesToLabels[offer.type], card);
+    setDataInCardBlock('.popup__type', TypesToLabels[offer.type], card);
     setDataInCardBlock('.popup__text--capacity',
         offer.rooms + ' комнаты для ' + offer.guests + ' гостей', card);
     setDataInCardBlock('.popup__text--time',

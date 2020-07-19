@@ -9,13 +9,13 @@
   var checkoutSelect = offerForm.querySelector('#timeout');
   var checkinSelect = offerForm.querySelector('#timein');
 
-  var typesToMinPrices = {'bungalo': 0, 'flat': 1000, 'house': 5000, 'palace': 10000};
+  var TypesToMinPrices = {'bungalo': 0, 'flat': 1000, 'house': 5000, 'palace': 10000};
 
   var setCustomValidityForPrice = function () {
     var price = priceInput.value;
     var type = typeSelect.value;
-    if (price < typesToMinPrices[type]) {
-      priceInput.setCustomValidity('Цена для данного типа жилья может быть не меньше ' + typesToMinPrices[type] + '₽/ночь');
+    if (price < TypesToMinPrices[type]) {
+      priceInput.setCustomValidity('Цена для данного типа жилья может быть не меньше ' + TypesToMinPrices[type] + '₽/ночь');
     } else {
       priceInput.setCustomValidity('');
     }
@@ -38,7 +38,7 @@
   };
 
   typeSelect.addEventListener('change', function (evt) {
-    priceInput.placeholder = typesToMinPrices[evt.target.value];
+    priceInput.placeholder = TypesToMinPrices[evt.target.value];
   });
 
   priceInput.addEventListener('invalid', function () {

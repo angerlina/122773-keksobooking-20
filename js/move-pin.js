@@ -12,7 +12,6 @@
 
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
-    getPinsAndActivatePage();
     var startCoords = {
       x: evt.clientX,
       y: evt.clientY
@@ -68,12 +67,13 @@
           mainPin.removeEventListener('click', onClickPreventDefault);
         };
         mainPin.addEventListener('click', onClickPreventDefault);
-        getPinsAndActivatePage();
       }
+      getPinsAndActivatePage();
     };
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
+
   });
 
 })();
