@@ -9,6 +9,7 @@ window.pins = (function () {
     pins.forEach(function (pin) {
       pin.remove();
     });
+    window.card.onCloseCard();
   };
 
   var getPinSize = function () {
@@ -44,13 +45,18 @@ window.pins = (function () {
     }
   };
 
+  var handleClickOnPin = function (pinElement, data) {
+    window.card.renderCard(data);
+    pinElement.classList.add('map__pin--active');
+  };
+
   var addEventListeners = function (pinElement, data) {
     pinElement.addEventListener('click', function () {
-      window.card.renderCard(data);
+      handleClickOnPin(pinElement, data);
     });
     pinElement.addEventListener('keydown', function (evt) {
       if (evt.key === 'Enter') {
-        window.card.renderCard(data);
+        handleClickOnPin(pinElement, data);
       }
     });
   };

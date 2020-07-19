@@ -16,8 +16,8 @@ window.map = (function () {
   var activatePage = function (offers) {
     document.querySelector('.map').classList.remove('map--faded');
     document.querySelector('.ad-form').classList.remove('ad-form--disabled');
-    window.offerForm.enableForm(offerFormElement, false);
-    window.offerForm.enableForm(filtersFormElement, false);
+    window.offerForm.enableForm(offerFormElement);
+    window.offerForm.enableForm(filtersFormElement);
     window.pins.renderPins(offers);
     window.offerForm.calculateAndFillAddress();
   };

@@ -71,6 +71,10 @@ window.card = (function () {
     var cardPopup = document.querySelector('.map__card.popup');
     if (cardPopup) {
       cardPopup.remove();
+      var pin = document.querySelector('.map__pin--active');
+      if (pin) {
+        pin.classList.remove('map__pin--active');
+      }
     }
   };
 
@@ -95,6 +99,7 @@ window.card = (function () {
 
   return {
     renderCard: renderCard,
+    onCloseCard: onCloseCard,
   };
 })();
 
