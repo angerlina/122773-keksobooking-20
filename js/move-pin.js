@@ -6,13 +6,13 @@
   var min = {x: 0 - halfOfPinWidth, y: 130};
   var max = {x: mapElement.clientWidth, y: 630};
 
-  var getPinsAndActivatePins = function () {
+  var getPinsAndActivatePage = function () {
     window.offersApi.sendGetRequest(window.map.activatePage);
   };
 
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
-    getPinsAndActivatePins();
+    getPinsAndActivatePage();
     var startCoords = {
       x: evt.clientX,
       y: evt.clientY
@@ -68,7 +68,7 @@
           mainPin.removeEventListener('click', onClickPreventDefault);
         };
         mainPin.addEventListener('click', onClickPreventDefault);
-        getPinsAndActivatePins();
+        getPinsAndActivatePage();
       }
     };
 
