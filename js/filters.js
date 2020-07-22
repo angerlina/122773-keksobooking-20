@@ -6,16 +6,16 @@ window.filters = (function () {
 
   var currentFilter = {housingPrice: '', housingType: '', housingRooms: '', housingGuests: '', features: []};
 
-  var selectChangeHandler = function (field, value) {
+  var selectChangeHandler = window.debounce.makeDebounce(function (field, value) {
     if (value === 'any') {
       currentFilter[field] = '';
     } else {
       currentFilter[field] = value;
     }
     window.offersApi.sendGetRequest(window.map.activatePage);
-  };
+  });
 
-  var checkboxChangeHandler = function (name, checked) {
+  var checkboxChangeHandler = window.debounce.makeDebounce(function (name, checked) {
     if (checked) {
       currentFilter.features.push(name);
     } else {
@@ -25,7 +25,7 @@ window.filters = (function () {
       }
     }
     window.offersApi.sendGetRequest(window.map.activatePage);
-  };
+  });
 
 
   formControls.forEach(function (element) {
