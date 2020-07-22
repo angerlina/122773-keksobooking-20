@@ -62,6 +62,7 @@ window.pins = (function () {
   };
 
   var renderPins = function (array) {
+    removePins();
     var documentFragment = document.createDocumentFragment();
     for (var i = 0; i < array.length; i++) {
       var pinElement = createPinElement(array[i]);

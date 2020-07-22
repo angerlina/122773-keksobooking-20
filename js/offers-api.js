@@ -9,13 +9,15 @@ window.offersApi = (function () {
   };
   var TIMEOUT_IN_MS = 10000;
 
-  var sendGetRequest = function (onSuccess, onError) {
+  var sendGetRequest = function (onSuccess, filterCallback, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
       if (xhr.status === StatusCode.OK) {
-        onSuccess(xhr.response);
+        onSuccess(xhr.response.filter(function (item) {
+          return window.filters.filterCallback(item);
+        }).slice(0, 5));
       } else {
         onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
       }

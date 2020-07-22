@@ -2,6 +2,15 @@
 
 window.utils = (function () {
 
+  var snakeToCamel = function(str) {
+   return str.toLowerCase().replace(/([-_][a-z])/g, group =>
+      group
+        .toUpperCase()
+        .replace('-', '')
+        .replace('_', '')
+    );
+  }
+
   var getRandomInt = function (min, max) {
     return min + Math.round((max - min) * Math.random());
   };
@@ -36,5 +45,6 @@ window.utils = (function () {
     formatPixelValueToInt: formatPixelValueToInt,
     getRandomItemsFromArray: getRandomItemsFromArray,
     getRandomItemFromArray: getRandomItemFromArray,
+    snakeToCamel: snakeToCamel,
   };
 })();
