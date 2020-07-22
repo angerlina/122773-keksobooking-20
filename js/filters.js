@@ -3,8 +3,18 @@
 window.filters = (function () {
   var form = document.querySelector('.map__filters');
   var formControls = form.querySelectorAll('select, input');
+  var initialFiltersValues = {housingPrice: '', housingType: '', housingRooms: '', housingGuests: '', features: []};
+  var currentFilter = Object.assign({}, initialFiltersValues);
 
-  var currentFilter = {housingPrice: '', housingType: '', housingRooms: '', housingGuests: '', features: []};
+  var resetFilters = function () {
+    form.reset();
+    var checkboxes = form.querySelectorAll('input');
+    currentFilter = Object.assign({}, initialFiltersValues);
+    currentFilter.features = [];
+    checkboxes.forEach(function (checkbox) {
+      checkbox.checked = false;
+    });
+  };
 
   var selectChangeHandler = window.debounce.makeDebounce(function (field, value) {
     if (value === 'any') {
@@ -79,5 +89,6 @@ window.filters = (function () {
   };
   return {
     filterCallback: filterCallback,
+    resetFilters: resetFilters,
   };
 })();

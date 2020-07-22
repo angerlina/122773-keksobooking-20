@@ -27,6 +27,7 @@ window.map = (function () {
     document.querySelector('.map').classList.add('map--faded');
     document.querySelector('.ad-form').classList.add('ad-form--disabled');
     window.offerForm.resetOffersForm();
+    window.filters.resetFilters();
     window.offerForm.calculateAndFillAddressForRoundPin();
     window.offerForm.disableForm(offerFormElement);
     window.offerForm.disableForm(filtersFormElement);
