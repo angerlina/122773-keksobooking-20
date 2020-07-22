@@ -40,11 +40,16 @@ window.utils = (function () {
     return array[getRandomInt(0, array.length)];
   };
 
+  var cloneObject = function (obj) {
+    return JSON.parse(JSON.stringify(obj));
+  };
+
   return {
     getRandomInt: getRandomInt,
     formatPixelValueToInt: formatPixelValueToInt,
     getRandomItemsFromArray: getRandomItemsFromArray,
     getRandomItemFromArray: getRandomItemFromArray,
     snakeToCamel: snakeToCamel,
+    cloneObject: cloneObject,
   };
 })();

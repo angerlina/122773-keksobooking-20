@@ -4,12 +4,12 @@ window.filters = (function () {
   var form = document.querySelector('.map__filters');
   var formControls = form.querySelectorAll('select, input');
   var initialFiltersValues = {housingPrice: '', housingType: '', housingRooms: '', housingGuests: '', features: []};
-  var currentFilter = Object.assign({}, initialFiltersValues);
+  var currentFilter = window.utils.cloneObject(initialFiltersValues);
 
   var resetFilters = function () {
     form.reset();
     var checkboxes = form.querySelectorAll('input');
-    currentFilter = Object.assign({}, initialFiltersValues);
+    currentFilter = window.utils.cloneObject(initialFiltersValues);
     currentFilter.features = [];
     checkboxes.forEach(function (checkbox) {
       checkbox.checked = false;
