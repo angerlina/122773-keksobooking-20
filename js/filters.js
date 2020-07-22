@@ -42,23 +42,23 @@ window.filters = (function () {
 
   var filterCallback = function (item) {
     var offer = item.offer;
-    var itemIsOk = true;
+    var testPassed = true;
     if (currentFilter.housingType) {
-      itemIsOk = itemIsOk && (currentFilter.housingType === offer.type);
+      testPassed = testPassed && (currentFilter.housingType === offer.type);
     }
     if (currentFilter.housingRooms) {
-      itemIsOk = itemIsOk && (+currentFilter.housingRooms === offer.rooms);
+      testPassed = testPassed && (+currentFilter.housingRooms === offer.rooms);
     }
     if (currentFilter.housingGuests) {
-      itemIsOk = itemIsOk && (+currentFilter.housingGuests === offer.guests);
+      testPassed = testPassed && (+currentFilter.housingGuests === offer.guests);
     }
     if (currentFilter.housingPrice) {
       switch (currentFilter.housingPrice) {
-        case 'middle': itemIsOk = itemIsOk && (offer.price > 10000) && (offer.price <= 50000);
+        case 'middle': testPassed = testPassed && (offer.price > 10000) && (offer.price <= 50000);
           break;
-        case 'low': itemIsOk = itemIsOk && (offer.price <= 10000);
+        case 'low': testPassed = testPassed && (offer.price <= 10000);
           break;
-        case 'high': itemIsOk = itemIsOk && (offer.price > 50000);
+        case 'high': testPassed = testPassed && (offer.price > 50000);
           break;
       }
     }
@@ -66,16 +66,16 @@ window.filters = (function () {
       if (offer.features && offer.features.length > 0) {
         currentFilter.features.forEach(function (featureInFilter) {
 
-          itemIsOk = itemIsOk && offer.features.some(function (feature) {
+          testPassed = testPassed && offer.features.some(function (feature) {
             return feature === featureInFilter;
           });
 
         });
       } else {
-        itemIsOk = false;
+        testPassed = false;
       }
     }
-    return itemIsOk;
+    return testPassed;
   };
   return {
     filterCallback: filterCallback,
