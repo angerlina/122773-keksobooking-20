@@ -24,7 +24,9 @@ window.userDialogs = (function () {
     }
   };
 
-  document.addEventListener('click', removeSuccessMessageHandler);
+  document.addEventListener('click', function () {
+    removeSuccessMessageHandler();
+  });
   document.addEventListener('keydown', function (evt) {
     if (evt.code === 'Escape') {
       removeSuccessMessageHandler();
