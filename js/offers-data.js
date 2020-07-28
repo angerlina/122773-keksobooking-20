@@ -2,6 +2,14 @@
 
 window.offersData = (function () {
 
+  var MIN_Y = 130;
+  var MAX_Y = 630;
+  var MIN_PRICE = 10000;
+  var MAX_PRICE = 100000;
+  var MIN_ROOMS = 1;
+  var MAX_ROOMS = 10;
+  var MIN_GUESTS = 1;
+  var MAX_GUESTS = 10;
   var TITLES = ['Сдам квартиру срочно', 'Сдам квартиру для туристов', 'Сдам квартиру посуточно'];
   var TYPES = ['palace', 'flat', 'house', 'bungalo'];
   var TIMES = ['12:00', '13:00', '14:00'];
@@ -27,15 +35,15 @@ window.offersData = (function () {
     var offer = {
       location: {
         x: window.utils.getRandomInt(window.pins.pinSize.width / 2, mapWidth),
-        y: window.utils.getRandomInt(130 + window.pins.pinSize.height, 630)},
+        y: window.utils.getRandomInt(MIN_Y + window.pins.pinSize.height, MAX_Y)},
       author: {
         avatar: 'img/avatars/user' + formatUserNumber(userNumber) + '.png'
       },
       title: window.utils.getRandomItemFromArray(TITLES),
-      price: getRandomInt(10000, 100000),
+      price: getRandomInt(MIN_PRICE, MAX_PRICE),
       type: getRandomItemFromArray(TYPES),
-      rooms: getRandomInt(1, 10),
-      guests: getRandomInt(1, 10),
+      rooms: getRandomInt(MIN_ROOMS, MAX_ROOMS),
+      guests: getRandomInt(MIN_GUESTS, MAX_GUESTS),
       checkin: getRandomItemFromArray(TIMES),
       checkout: getRandomItemFromArray(TIMES),
       features: getRandomItemsFromArray(FEATURES),

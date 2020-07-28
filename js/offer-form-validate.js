@@ -1,6 +1,13 @@
 'use strict';
 
-(function () {
+window.offerFormValidate = (function () {
+  var ONE_GUEST = 1;
+  var TWO_ROOMS = 2;
+  var THREE_GUESTS = 3;
+  var ZERO_GUESTS = 0;
+  var THREE_ROOMS = 3;
+  var HUNDRED_ROOMS = 100;
+
   var offerForm = document.querySelector('.ad-form');
   var roomsSelect = offerForm.querySelector('#room_number');
   var guestsSelect = offerForm.querySelector('#capacity');
@@ -24,53 +31,64 @@
   var setCustomValidityForGuestsAndRooms = function () {
     var rooms = +roomsSelect.value;
     var guests = +guestsSelect.value;
-    if (rooms === 1 && guests !== 1) {
+    if (rooms === ONE_GUEST && guests !== ONE_GUEST) {
       guestsSelect.setCustomValidity(' 1 комната может быть только для 1 гостя');
-    } else if (rooms === 2 && (guests === 3 || guests === 0)) {
+    } else if (rooms === TWO_ROOMS && (guests === THREE_GUESTS || guests === ZERO_GUESTS)) {
       guestsSelect.setCustomValidity('2 комнаты могут быть только для 1 или 2 гостей');
-    } else if (rooms === 3 && guests === 0) {
+    } else if (rooms === THREE_ROOMS && guests === ZERO_GUESTS) {
       guestsSelect.setCustomValidity('3 комнаты могут быть только для 1, 2 или 3 гостей');
-    } else if (rooms === 100 && guests !== 0) {
+    } else if (rooms === HUNDRED_ROOMS && guests !== ZERO_GUESTS) {
       guestsSelect.setCustomValidity('100 комнат могут быть только "не для гостей"');
     } else {
       guestsSelect.setCustomValidity('');
     }
   };
 
-  typeSelect.addEventListener('change', function (evt) {
+  var onChangeTypeSelect = function (evt) {
     priceInput.placeholder = TypesToMinPrices[evt.target.value];
-  });
+  };
 
-  priceInput.addEventListener('invalid', function () {
-    setCustomValidityForPrice();
-  });
-
-  priceInput.addEventListener('change', function () {
-    setCustomValidityForPrice();
-  });
-
-
-  guestsSelect.addEventListener('change', function () {
-    setCustomValidityForGuestsAndRooms(guestsSelect);
-  });
-
-  guestsSelect.addEventListener('invalid', function () {
-    setCustomValidityForGuestsAndRooms(guestsSelect);
-  });
-
-  roomsSelect.addEventListener('change', function (evt) {
+  var onChangeRoomsSelect = function (evt) {
     if (evt.target.value === '100') {
       guestsSelect.value = 0;
     } else {
       guestsSelect.value = evt.target.value;
     }
-  });
+  };
 
-  checkoutSelect.addEventListener('change', function (evt) {
+  var onChangeCheckoutSelect = function (evt) {
     checkinSelect.value = evt.target.value;
-  });
+  };
 
-  checkinSelect.addEventListener('change', function (evt) {
+  var onChangeCheckinSelect = function (evt) {
     checkoutSelect.value = evt.target.value;
-  });
+  };
+
+  var addEventListenersToOffersForm = function () {
+    typeSelect.addEventListener('change', onChangeTypeSelect);
+    priceInput.addEventListener('invalid', setCustomValidityForPrice);
+    priceInput.addEventListener('change', setCustomValidityForPrice);
+    guestsSelect.addEventListener('change', setCustomValidityForGuestsAndRooms);
+    guestsSelect.addEventListener('invalid', setCustomValidityForGuestsAndRooms);
+    roomsSelect.addEventListener('change', onChangeRoomsSelect);
+    checkoutSelect.addEventListener('change', onChangeCheckoutSelect);
+    checkinSelect.addEventListener('change', onChangeCheckinSelect);
+  };
+
+  var removeEventListenersFromOffersForm = function () {
+    typeSelect.removeEventListener('change', onChangeTypeSelect);
+    priceInput.removeEventListener('invalid', setCustomValidityForPrice);
+    priceInput.removeEventListener('change', setCustomValidityForPrice);
+    guestsSelect.removeEventListener('change', setCustomValidityForGuestsAndRooms);
+    guestsSelect.removeEventListener('invalid', setCustomValidityForGuestsAndRooms);
+    roomsSelect.removeEventListener('change', onChangeRoomsSelect);
+    checkoutSelect.removeEventListener('change', onChangeCheckoutSelect);
+    checkinSelect.removeEventListener('change', onChangeCheckinSelect);
+  };
+
+  return {
+    addEventListenersToOffersForm: addEventListenersToOffersForm,
+    removeEventListenersFromOffersForm: removeEventListenersFromOffersForm,
+  };
+
 })();

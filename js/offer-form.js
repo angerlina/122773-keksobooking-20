@@ -3,11 +3,16 @@
 window.offerForm = (function () {
   var mainPin = document.querySelector('.map__pin--main');
   var offerForm = document.querySelector('.ad-form');
-  var clearButton = document.querySelector('.ad-form__reset');
 
-  clearButton.addEventListener('click', function () {
-    window.map.inactivatePage();
-  });
+  var addEventListenerToClearButton = function () {
+    var clearButton = document.querySelector('.ad-form__reset');
+    clearButton.addEventListener('click', window.map.inactivatePage);
+  };
+
+  var removeEventListenerFromClearButton = function () {
+    var clearButton = document.querySelector('.ad-form__reset');
+    clearButton.removeEventListener('click', window.map.inactivatePage);
+  };
 
   var resetOffersForm = function () {
     offerForm.reset();
@@ -23,7 +28,14 @@ window.offerForm = (function () {
     evt.preventDefault();
   };
 
-  offerForm.addEventListener('submit', submitHandler);
+
+  var addSubmitHandlerToOffersForm = function () {
+    offerForm.addEventListener('submit', submitHandler);
+  };
+
+  var removeSubmitHandlerFromOffersForm = function () {
+    offerForm.removeEventListener('submit', submitHandler);
+  };
 
   var enableForm = function (formElement) {
     var elementsToDisable = formElement.querySelectorAll('input, select, textarea, button');
@@ -73,5 +85,9 @@ window.offerForm = (function () {
     enableForm: enableForm,
     disableForm: disableForm,
     resetOffersForm: resetOffersForm,
+    addSubmitHandlerToOffersForm: addSubmitHandlerToOffersForm,
+    removeSubmitHandlerFromOffersForm: removeSubmitHandlerFromOffersForm,
+    addEventListenerToClearButton: addEventListenerToClearButton,
+    removeEventListenerFromClearButton: removeEventListenerFromClearButton
   };
 })();

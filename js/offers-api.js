@@ -3,7 +3,7 @@
 window.offersApi = (function () {
   var URL = 'https://javascript.pages.academy/keksobooking/data';
   var POST_URL = 'https://javascript.pages.academy/keksobooking';
-
+  var MAX_COUNT = 5;
   var StatusCode = {
     OK: 200
   };
@@ -17,7 +17,7 @@ window.offersApi = (function () {
       if (xhr.status === StatusCode.OK) {
         onSuccess(xhr.response.filter(function (item) {
           return window.filters.filterCallback(item);
-        }).slice(0, 5));
+        }).slice(0, MAX_COUNT));
       } else {
         onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
       }

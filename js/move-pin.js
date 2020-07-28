@@ -1,10 +1,12 @@
 'use strict';
 (function () {
+  var MIN_Y = 130;
+  var MAX_Y = 630;
   var mapElement = document.querySelector('.map');
   var mainPin = mapElement.querySelector('.map__pin');
   var halfOfPinWidth = mainPin.clientWidth / 2;
-  var min = {x: 0 - halfOfPinWidth, y: 130};
-  var max = {x: mapElement.clientWidth, y: 630};
+  var min = {x: 0 - halfOfPinWidth, y: MIN_Y};
+  var max = {x: mapElement.clientWidth, y: MAX_Y};
 
   var getPinsAndActivatePage = function () {
     window.offersApi.sendGetRequest(window.map.activatePage);

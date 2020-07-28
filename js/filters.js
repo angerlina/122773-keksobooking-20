@@ -1,6 +1,8 @@
 'use strict';
 
 window.filters = (function () {
+  var MIN_PRICE = 10000;
+  var MAX_PRICE = 50000;
   var form = document.querySelector('.map__filters');
   var formControls = form.querySelectorAll('select, input');
   var initialFiltersValues = {housingPrice: '', housingType: '', housingRooms: '', housingGuests: '', features: []};
@@ -37,18 +39,26 @@ window.filters = (function () {
     window.offersApi.sendGetRequest(window.map.activatePage);
   });
 
+  var onChangeFormControls = function (evt) {
+    if (evt.target.type === 'checkbox') {
+      checkboxChangeHandler(evt.target.value, evt.target.checked);
+    } else {
+      selectChangeHandler(window.utils.snakeToCamel(evt.target.name), evt.target.value);
+    }
+    window.offersApi.sendGetRequest(window.map.activatePage);
+  };
 
-  formControls.forEach(function (element) {
-    element.addEventListener('change', function (evt) {
-      if (evt.target.type === 'checkbox') {
-        checkboxChangeHandler(evt.target.value, evt.target.checked);
-      } else {
-        selectChangeHandler(window.utils.snakeToCamel(evt.target.name), evt.target.value);
-      }
-      window.offersApi.sendGetRequest(window.map.activatePage);
+  var addEventListenersToFilterControls = function () {
+    formControls.forEach(function (element) {
+      element.addEventListener('change', onChangeFormControls);
     });
-  });
+  };
 
+  var removeEventListenersFromFilterControls = function () {
+    formControls.forEach(function (element) {
+      element.removeEventListener('change', onChangeFormControls);
+    });
+  };
 
   var filterCallback = function (item) {
     var offer = item.offer;
@@ -64,11 +74,11 @@ window.filters = (function () {
     }
     if (currentFilter.housingPrice) {
       switch (currentFilter.housingPrice) {
-        case 'middle': testPassed = testPassed && (offer.price > 10000) && (offer.price <= 50000);
+        case 'middle': testPassed = testPassed && (offer.price > MIN_PRICE) && (offer.price <= MAX_PRICE);
           break;
-        case 'low': testPassed = testPassed && (offer.price <= 10000);
+        case 'low': testPassed = testPassed && (offer.price <= MIN_PRICE);
           break;
-        case 'high': testPassed = testPassed && (offer.price > 50000);
+        case 'high': testPassed = testPassed && (offer.price > MAX_PRICE);
           break;
       }
     }
@@ -90,5 +100,7 @@ window.filters = (function () {
   return {
     filterCallback: filterCallback,
     resetFilters: resetFilters,
+    addEventListenersToFilterControls: addEventListenersToFilterControls,
+    removeEventListenersFromFilterControls: removeEventListenersFromFilterControls,
   };
 })();

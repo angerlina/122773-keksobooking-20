@@ -1,9 +1,9 @@
 'use strict';
 
 window.card = (function () {
+  var ESCAPE_BUTTON_CODE = 'Escape';
   var TypesToLabels = {'flat': 'Квартира', 'bungalo': 'Бунгало', 'house': 'Дом', 'palace': 'Дворец'};
   var cardTemplate = document.querySelector('#card').content.querySelector('article');
-
   var createFeatures = function (features, card) {
     var featuresContainer = card.querySelector('.popup__features');
     if (features && features.length > 0) {
@@ -76,10 +76,14 @@ window.card = (function () {
         pin.classList.remove('map__pin--active');
       }
     }
+    if (cardPopup) {
+      cardPopup.removeEventListener('click', onCloseCard);
+    }
+    document.removeEventListener('keydown', onCardPopupEscPress);
   };
 
   var onCardPopupEscPress = function (evt) {
-    if (evt.key === 'Escape') {
+    if (evt.key === ESCAPE_BUTTON_CODE) {
       evt.preventDefault();
       onCloseCard();
     }
