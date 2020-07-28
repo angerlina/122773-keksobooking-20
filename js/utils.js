@@ -2,13 +2,10 @@
 
 window.utils = (function () {
 
-  var snakeToCamel = function(str) {
-   return str.toLowerCase().replace(/([-_][a-z])/g, group =>
-      group
-        .toUpperCase()
-        .replace('-', '')
-        .replace('_', '')
-    );
+  function snakeToCamel(str) {
+    return str.replace(/-([a-z])/g, function (g) {
+      return g[1].toUpperCase();
+    });
   }
 
   var getRandomInt = function (min, max) {
